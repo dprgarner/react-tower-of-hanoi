@@ -25,6 +25,8 @@ var server = new WebpackDevServer(compiler, {
 });
 
 server.listen(port);
+var url = 'http://localhost:' + port + '/webpack-dev-server/';
+console.log('Server started at:\n', url, '\n');
 if (argv.open || argv.o) {
-  open("http://localhost:" + port + '/webpack-dev-server/');
+  open(url);
 }
