@@ -1,3 +1,4 @@
+var os = require('os');
 var path = require('path');
 
 var _ = require('lodash');
@@ -38,7 +39,7 @@ var baseConfig = {
 exports.devServer = function (port) {
   var entry = JSON.parse(JSON.stringify(baseConfig.entry));
   entry.app.unshift(
-    'webpack-dev-server/client?http://localhost:' + port + '/'
+    'webpack-dev-server/client?http://' + os.hostname() + ':' + port + '/'
   );
   return _.extend({}, baseConfig, {
     entry: entry,

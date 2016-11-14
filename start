@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-
 var argv = require('minimist')(process.argv.slice(2));
+var open = require('open');
+var os = require('os');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var open = require('open');
 
 var port = argv._[0];
 var config = require("./webpack.conf.js").devServer(port);
@@ -25,7 +25,7 @@ var server = new WebpackDevServer(compiler, {
 });
 
 server.listen(port);
-var url = 'http://localhost:' + port + '/webpack-dev-server/';
+var url = 'http://' + os.hostname() + ':' + port + '/webpack-dev-server/';
 console.log('Server started at:\n', url, '\n');
 if (argv.open || argv.o) {
   open(url);
