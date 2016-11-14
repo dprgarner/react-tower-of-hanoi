@@ -6,7 +6,7 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "watchtest": "karma start karma.conf.js --watch",
-    "start": "node webpack_dev_server.js --open -- 8080"
+    "start": "node start --open -- 8080"
   },
   "author": "",
   "license": "ISC",
