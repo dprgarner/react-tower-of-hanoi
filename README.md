@@ -6,7 +6,12 @@ To start the Webpack auto-refreshing dev server:
 ```
 ./start [--open] <port>
 ```
-To start the dev server and also open the browser at the current URL, add the `--open` option.
+To start the dev server and also open the browser at the current URL, add the
+`--open` option.
+
+The auto-refreshing webpack server can sometimes miss file change events when
+using vim. To fix this, change the vim setting `:set backupcopy=yes`.
+(See <https://github.com/webpack/webpack/issues/781#issuecomment-95523711>)
 
 ------
 To run the tests once:
@@ -14,7 +19,8 @@ To run the tests once:
 npm test
 ```
 
-To run the tests in watch test mode, add the `--watch` argument or run the watchtest script, i.e.:
+To run the tests in watch test mode, add the `--watch` argument or run the
+watchtest script, i.e.:
 ```
 npm test -- --watch
 npm test -- -w
