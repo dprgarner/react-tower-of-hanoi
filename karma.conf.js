@@ -1,5 +1,4 @@
-// Karma configuration
-// Generated on Wed Sep 21 2016 20:24:16 GMT+0100 (GMT Daylight Time)
+var argv = require('minimist')(process.argv.slice(2));
 
 module.exports = function(config) {
   config.set({
@@ -63,6 +62,13 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
-}
+    concurrency: Infinity,
+  });
+
+  if (argv.watch || argv.w) {
+    config.set({
+      autoWatch: true,
+      singleRun: false,
+    }); 
+  }
+};
