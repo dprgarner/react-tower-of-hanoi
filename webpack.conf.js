@@ -32,7 +32,7 @@ var baseConfig = {
 
   resolve: {
     extensions: ['', '.js', '.jsx'],
-  }
+  },
 };
 
 exports.devServer = function (port) {
