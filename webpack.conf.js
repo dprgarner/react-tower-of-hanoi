@@ -1,6 +1,7 @@
 var os = require('os');
 var path = require('path');
 
+var _ = require('underscore');
 var webpack = require('webpack');
 
 var baseConfig = {
@@ -43,7 +44,7 @@ exports.devServer = function (port) {
   entry.app.unshift(
     'webpack-dev-server/client?http://' + os.hostname() + ':' + port + '/'
   );
-  return Object.assign({}, baseConfig, {
+  return _.extend({}, baseConfig, {
     entry: entry,
     devServer: {
       inline: true,
@@ -52,7 +53,7 @@ exports.devServer = function (port) {
 };
 
 exports.test = function () {
-  return Object.assign({}, baseConfig, {
+  return _.extend({}, baseConfig, {
     externals: {
       'cheerio': 'window',
       'react/addons': true,
