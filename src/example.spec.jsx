@@ -1,8 +1,25 @@
 import {shallow} from 'enzyme';
 
-describe('suite', () => {
+class Sum {
+  addOne(x) {
+    return x + 1;
+  }
+}
+
+describe('sinon', () => {
+  beforeEach(() => {
+    sinon.spy(Sum.prototype, 'addOne');
+  });
+
+  afterEach(() => {
+    Sum.prototype.addOne.restore();
+  });
+
   it('works', () => {
-    expect(1+1).to.equal(2);
+    let instance = new Sum();
+    expect(instance.addOne).to.have.not.been.called;
+    expect(instance.addOne(1)).to.equal(2);
+    expect(instance.addOne).to.have.been.calledOnce;
   });
 });
 
@@ -14,5 +31,5 @@ describe('enzyme', function () {
 
     let component = shallow(<Greeter greet='world'/>);
     expect(component.text()).to.equal('Hello world!');
-  })
+  });
 });

@@ -1,7 +1,6 @@
 var os = require('os');
 var path = require('path');
 
-var _ = require('lodash');
 var webpack = require('webpack');
 
 var baseConfig = {
@@ -21,6 +20,9 @@ var baseConfig = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel',
+        query: {
+          presets: ['react', 'es2015', 'stage-2'],
+        },
       },
     ],
   },
@@ -41,7 +43,7 @@ exports.devServer = function (port) {
   entry.app.unshift(
     'webpack-dev-server/client?http://' + os.hostname() + ':' + port + '/'
   );
-  return _.extend({}, baseConfig, {
+  return Object.assign({}, baseConfig, {
     entry: entry,
     devServer: {
       inline: true,
@@ -50,7 +52,7 @@ exports.devServer = function (port) {
 };
 
 exports.test = function () {
-  return _.extend({}, baseConfig, {
+  return Object.assign({}, baseConfig, {
     externals: {
       'cheerio': 'window',
       'react/addons': true,

@@ -7,11 +7,18 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha', 'sinon-chai'],
+
+    // chai config
+    // client: {
+    //   chai: {
+    //     includeStack: true,
+    //   },
+    // },
 
     // list of files / patterns to load in the browser
     files: [
-      './test.js',
+      './import_tests.js',
     ],
 
     // list of files to exclude
@@ -21,7 +28,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './test.js': ['webpack'],
+      './import_tests.js': ['webpack'],
     },
 
     webpack: require('./webpack.conf.js').test(),
