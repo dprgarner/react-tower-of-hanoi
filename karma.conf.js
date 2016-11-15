@@ -9,13 +9,6 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'sinon-chai'],
 
-    // chai config
-    // client: {
-    //   chai: {
-    //     includeStack: true,
-    //   },
-    // },
-
     // list of files / patterns to load in the browser
     files: [
       './import_tests.js',
