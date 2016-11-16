@@ -2,6 +2,8 @@ import {render} from 'react-dom'
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
+import 'file?name=index.html!./index.html';
+
 const App = () => (
   <div>{'Hello world!'}</div>
 )
