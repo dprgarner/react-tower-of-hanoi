@@ -2,7 +2,6 @@ var os = require('os');
 var path = require('path');
 
 var _ = require('underscore');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 
 var baseConfig = {
@@ -26,10 +25,6 @@ var baseConfig = {
           presets: ['react', 'es2015', 'stage-2'],
         },
       },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('css-loader'),
-      },
     ],
   },
 
@@ -37,7 +32,6 @@ var baseConfig = {
     new webpack.ProvidePlugin({
       React: 'react',
     }),
-    new ExtractTextPlugin('style.css'),
   ],
 
   resolve: {

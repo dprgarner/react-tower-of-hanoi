@@ -3,7 +3,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import 'file?name=index.html!./index.html';
-import styles from './style.css';
+import 'file?name=style.css!./style.css';
 
 const App = () => (
   <div>{'Hello world!'}</div>
