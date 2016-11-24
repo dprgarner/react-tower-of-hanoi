@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+const TOWERS_NUMBER = 3;
 const discColours = [
   'white',
   'red',
@@ -44,7 +45,7 @@ class Towers extends React.Component {
   constructor(props) {
     super(props);
     let startTower = _.range(1, this.props.discsNumber + 1);
-    let discs = _.map(Array(this.props.towersNumber), (val, i) =>
+    let discs = _.map(Array(TOWERS_NUMBER), (val, i) =>
       i === 0 ? startTower : []
     );
     this.state = {discs};
@@ -69,23 +70,26 @@ class Towers extends React.Component {
   }
 
   // addTopDisc() {
-  //   this.transferTopDisc(1, 2);
+  //   this.transferTopDisc(0, 2);
   // }
 
   transferTopDisc(source, dest) {
-    if (source === dest) return;
-    const disc = this.state.discs[source][0];
-    if (this.state.discs[dest][0] < disc) return;
+    this.setState((state) => {
+      const disc = state.discs[source][0];
 
-    let discs = [...this.state.discs];
-    discs[source] = _.tail(discs[source]);
-    discs[dest] = [disc, ...this.state.discs[dest]];
-    this.setState({discs});
+      if (source === dest) return state;
+      if (state.discs[dest][0] < disc) return state;
+
+      let discs = [...state.discs];
+      discs[source] = _.tail(discs[source]);
+      discs[dest] = [disc, ...state.discs[dest]];
+      return {discs};
+    });
   }
 }
 
 const App = () => (
-  <Towers towersNumber={3} discsNumber={5} />
+  <Towers discsNumber={5} />
 );
 
 export default App;
