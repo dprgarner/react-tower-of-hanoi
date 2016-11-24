@@ -6,7 +6,6 @@ body {
 .tower {
   display: inline-block;
   text-align: center;
-  width: 200px;
   position: relative;
   margin-right: -1px;
 }

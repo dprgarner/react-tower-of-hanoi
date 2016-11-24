@@ -10,11 +10,12 @@ const discColours = [
 ];
 
 const Disc = ({size}) => {
-  const discWidth = 50 + size * 25;
+  const discWidth = (size + 0.5) * 25;
   const discStyle = {
     width: discWidth + 'px',
     backgroundColor: discColours[size],
-  }
+  };
+
   return (
     <div className='disc' style={discStyle}>
       {size}
@@ -22,28 +23,30 @@ const Disc = ({size}) => {
   );
 };
 
-const Tower = ({discs}) => (
-  <div className='tower'>
-    <div className='tower-pillar' />
-    <div className='tower-base' />
-    <div className='disc-group'>
-      {discs.map((size, i) =>
-        <Disc key={i} size={size} />
-      )}
+const Tower = ({towerDiscs, maxSize}) => {
+  return (
+    <div className='tower' style={{width: (maxSize + 1) * 25}}>
+      <div className='tower-pillar' />
+      <div className='tower-base' />
+      <div className='disc-group'>
+        {towerDiscs.map((size, i) =>
+          <Disc key={i} size={size} />
+        )}
+      </div>
     </div>
-  </div>
-);
+  )
+};
 
-const Towers = ({number}) => (
+const Towers = ({discs}) => (
   <div>
-    {[...Array(number)].map((x, i) =>
-      <Tower key={i+1} discs={i==0 ? [1, 3, 4] : [2, 5]} />
+    {discs.map((towerDiscs, i) =>
+      <Tower key={i+1} towerDiscs={towerDiscs} maxSize={5} />
     )}
   </div>
 );
 
 const App = () => (
-  <Towers number={3} />
+  <Towers number={3} discs={[[1,3], [2], [4,5]]} />
 );
 
 export default App;
