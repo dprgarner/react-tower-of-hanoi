@@ -34,7 +34,7 @@ const Tower = ({towerDiscs, maxSize, onClick}) => {
       <div className='tower-base' />
       <div className='disc-group'>
         {towerDiscs.map((size, i) =>
-          <Disc key={i} size={size} />
+          <Disc key={size.toString()} size={size} />
         )}
       </div>
     </div>
