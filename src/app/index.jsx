@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const discColours = [
   'white',
   'red',
@@ -10,7 +12,7 @@ const discColours = [
 ];
 
 const Disc = ({size}) => {
-  const discWidth = (size + 0.5) * 25;
+  const discWidth = (size + 1.5) * 25;
   const discStyle = {
     width: discWidth + 'px',
     backgroundColor: discColours[size],
@@ -24,8 +26,9 @@ const Disc = ({size}) => {
 };
 
 const Tower = ({towerDiscs, maxSize}) => {
+  const towerStyle = {width: (maxSize + 3) * 25};
   return (
-    <div className='tower' style={{width: (maxSize + 1) * 25}}>
+    <div className='tower' style={towerStyle}>
       <div className='tower-pillar' />
       <div className='tower-base' />
       <div className='disc-group'>
@@ -37,16 +40,23 @@ const Tower = ({towerDiscs, maxSize}) => {
   )
 };
 
-const Towers = ({discs}) => (
-  <div>
-    {discs.map((towerDiscs, i) =>
-      <Tower key={i+1} towerDiscs={towerDiscs} maxSize={5} />
-    )}
-  </div>
-);
+const Towers = ({towersNumber, discsNumber}) => {
+  let startTower = _.range(1, discsNumber + 1);
+  let discs = _.map(Array(towersNumber), (val, i) =>
+    i === 0 ? startTower : []
+  );
+
+  return (
+    <div>
+      {discs.map((towerDiscs, i) =>
+        <Tower key={i+1} towerDiscs={towerDiscs} maxSize={discsNumber} />
+      )}
+    </div>
+  );
+};
 
 const App = () => (
-  <Towers number={3} discs={[[1,3], [2], [4,5]]} />
+  <Towers towersNumber={3} discsNumber={5} />
 );
 
 export default App;
