@@ -40,20 +40,30 @@ const Tower = ({towerDiscs, maxSize}) => {
   )
 };
 
-const Towers = ({towersNumber, discsNumber}) => {
-  let startTower = _.range(1, discsNumber + 1);
-  let discs = _.map(Array(towersNumber), (val, i) =>
-    i === 0 ? startTower : []
-  );
+class Towers extends React.Component {
+  constructor(props) {
+    super(props);
+    let startTower = _.range(1, this.props.discsNumber + 1);
+    let discs = _.map(Array(this.props.towersNumber), (val, i) =>
+      i === 0 ? startTower : []
+    );
+    this.state = {discs};
+  }
 
-  return (
-    <div>
-      {discs.map((towerDiscs, i) =>
-        <Tower key={i+1} towerDiscs={towerDiscs} maxSize={discsNumber} />
-      )}
-    </div>
-  );
-};
+  render() {
+    return (
+      <div>
+        {this.state.discs.map((towerDiscs, i) =>
+          <Tower
+            key={i+1}
+            towerDiscs={towerDiscs}
+            maxSize={this.props.discsNumber}
+          />
+        )}
+      </div>
+    );
+  }
+}
 
 const App = () => (
   <Towers towersNumber={3} discsNumber={5} />
