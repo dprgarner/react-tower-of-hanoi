@@ -12,7 +12,7 @@ const discColours = [
   'blue',
 ];
 
-const Disc = ({size}) => {
+const Disc = ({size, topDisc, startDrag}) => {
   const discWidth = (size + 1.5) * 25;
   const discStyle = {
     width: discWidth + 'px',
@@ -20,26 +20,40 @@ const Disc = ({size}) => {
   };
 
   return (
-    <div className='disc' style={discStyle}>
-      {size}
+    <div
+      className='disc'
+      style={discStyle}
+      draggable={topDisc}
+      onDragStart={startDrag}
+    >
+      <span className='disc-label'>
+        {size}
+      </span>
     </div>
   );
-};
+}
 
-const Tower = ({towerDiscs, maxSize, onClick}) => {
-  const towerStyle = {width: (maxSize + 3) * 25};
-  return (
-    <div className='tower' style={towerStyle} onClick={onClick}>
-      <div className='tower-pillar' />
-      <div className='tower-base' />
-      <div className='disc-group'>
-        {towerDiscs.map((size, i) =>
-          <Disc key={size.toString()} size={size} />
-        )}
-      </div>
+const Tower = ({towerDiscs, maxSize, startTopDiscDrag, dropDisc}) => (
+  <div
+    className='tower'
+    style={{width: (maxSize + 3) * 25}}
+    onDragOver={(e) => {e.preventDefault()}}
+    onDrop={dropDisc}
+  >
+    <div className='tower-pillar' />
+    <div className='tower-base' />
+    <div className='disc-group'>
+      {towerDiscs.map((size, i) =>
+        <Disc
+          key={size.toString()}
+          size={size}
+          topDisc={i===0}
+          startDrag={startTopDiscDrag}
+        />
+      )}
     </div>
-  )
-};
+  </div>
+);
 
 class Towers extends React.Component {
   constructor(props) {
@@ -48,10 +62,26 @@ class Towers extends React.Component {
     let discs = _.map(Array(TOWERS_NUMBER), (val, i) =>
       i === 0 ? startTower : []
     );
-    this.state = {discs};
-    // this.state.discs = [
-    //   [1,2,4], [3], [5]
-    // ]
+    this.state = {discs, activeTower: null};
+  }
+
+  startTopDiscDrag(activeTower) {
+    this.setState((state) => ({activeTower}));
+  }
+
+  dropDisc(destTower) {
+    this.setState((state) => {
+      const sourceTower = state.activeTower;
+      if (sourceTower === destTower || sourceTower === null) return state;
+
+      const disc = state.discs[sourceTower][0];
+      if (state.discs[destTower][0] < disc) return state;
+
+      let discs = [...state.discs];
+      discs[sourceTower] = _.tail(discs[sourceTower]);
+      discs[destTower] = [disc, ...state.discs[destTower]];
+      return {discs, activeTower: null};
+    });
   }
 
   render() {
@@ -62,29 +92,12 @@ class Towers extends React.Component {
             key={i+1}
             towerDiscs={towerDiscs}
             maxSize={this.props.discsNumber}
-            // onClick={this.addTopDisc.bind(this)}
+            startTopDiscDrag={() => this.startTopDiscDrag(i)}
+            dropDisc={() => this.dropDisc(i)}
           />
         )}
       </div>
     );
-  }
-
-  // addTopDisc() {
-  //   this.transferTopDisc(0, 2);
-  // }
-
-  transferTopDisc(source, dest) {
-    this.setState((state) => {
-      const disc = state.discs[source][0];
-
-      if (source === dest) return state;
-      if (state.discs[dest][0] < disc) return state;
-
-      let discs = [...state.discs];
-      discs[source] = _.tail(discs[source]);
-      discs[dest] = [disc, ...state.discs[dest]];
-      return {discs};
-    });
   }
 }
 
