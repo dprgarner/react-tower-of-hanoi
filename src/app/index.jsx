@@ -62,25 +62,26 @@ class Towers extends React.Component {
     let discs = _.map(Array(TOWERS_NUMBER), (val, i) =>
       i === 0 ? startTower : []
     );
-    this.state = {discs, activeTower: null};
+    this.state = {discs};
   }
 
   startTopDiscDrag(activeTower) {
-    this.setState((state) => ({activeTower}));
+    this.activeTower = activeTower;
   }
 
   dropDisc(destTower) {
-    this.setState((state) => {
-      const sourceTower = state.activeTower;
-      if (sourceTower === destTower || sourceTower === null) return state;
+    const sourceTower = this.activeTower;
+    this.activeTower = null;
+    if (sourceTower === destTower || sourceTower === null) return;
 
+    this.setState((state) => {
       const disc = state.discs[sourceTower][0];
       if (state.discs[destTower][0] < disc) return state;
 
       let discs = [...state.discs];
       discs[sourceTower] = _.tail(discs[sourceTower]);
       discs[destTower] = [disc, ...state.discs[destTower]];
-      return {discs, activeTower: null};
+      return {discs};
     });
   }
 
