@@ -1,8 +1,8 @@
 {
-  "name": "react-redux-boilerplate",
+  "name": "react-tower-of-hanoi",
   "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/dprgarner/react-redux-boilerplate",
+  "repository": "https://github.com/dprgarner/react-tower-of-hanoi",
   "main": "index.js",
   "scripts": {
     "test": "karma start karma.conf.js",
