@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const TOWERS_NUMBER = 3;
 const discColours = [
-  'white',
+  'gray',
   'red',
   'green',
   'cyan',
@@ -16,7 +16,7 @@ const Disc = ({size, topDisc, startDrag}) => {
   const discWidth = (size + 1.5) * 25;
   const discStyle = {
     width: discWidth + 'px',
-    backgroundColor: discColours[size],
+    backgroundColor: discColours[size % 8],
   };
 
   return (
@@ -33,27 +33,32 @@ const Disc = ({size, topDisc, startDrag}) => {
   );
 }
 
-const Tower = ({towerDiscs, maxSize, startTopDiscDrag, dropDisc}) => (
-  <div
-    className='tower'
-    style={{width: (maxSize + 3) * 25}}
-    onDragOver={(e) => {e.preventDefault()}}
-    onDrop={dropDisc}
-  >
-    <div className='tower-pillar' />
-    <div className='tower-base' />
-    <div className='disc-group'>
-      {towerDiscs.map((size, i) =>
-        <Disc
-          key={size.toString()}
-          size={size}
-          topDisc={i===0}
-          startDrag={startTopDiscDrag}
-        />
-      )}
+const Tower = ({towerDiscs, maxSize, startTopDiscDrag, dropDisc}) => {
+  const towerStyle = {width: (maxSize + 3) * 25};
+  const pillarStyle = {height: 100 + maxSize * 20};
+
+  return (
+    <div
+      className='tower'
+      style={towerStyle}
+      onDragOver={(e) => {e.preventDefault()}}
+      onDrop={dropDisc}
+    >
+      <div className='tower-pillar' style={pillarStyle} />
+      <div className='tower-base' />
+      <div className='disc-group'>
+        {towerDiscs.map((size, i) =>
+          <Disc
+            key={size.toString()}
+            size={size}
+            topDisc={i===0}
+            startDrag={startTopDiscDrag}
+          />
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 class Towers extends React.Component {
   constructor(props) {
@@ -103,7 +108,7 @@ class Towers extends React.Component {
 }
 
 const App = () => (
-  <Towers discsNumber={5} />
+  <Towers discsNumber={7} />
 );
 
 export default App;
