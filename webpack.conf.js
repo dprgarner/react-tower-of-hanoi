@@ -3,6 +3,7 @@ var path = require('path');
 
 var _ = require('underscore');
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var baseConfig = {
   entry: {
@@ -32,6 +33,10 @@ var baseConfig = {
     new webpack.ProvidePlugin({
       React: 'react',
     }),
+    new CopyWebpackPlugin([
+      {from: './src/index.html'},
+      {from: './src/style.css'},
+    ]),
   ],
 
   resolve: {
@@ -49,6 +54,7 @@ exports.devServer = function (port) {
     devServer: {
       inline: true,
     },
+    devtool: 'source-map',
   });
 };
 
